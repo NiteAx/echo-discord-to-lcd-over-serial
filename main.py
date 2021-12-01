@@ -5,7 +5,8 @@ import os
 
 load_dotenv()
 
-ignoredIDs = [773986530695839764, 349942347905236992] #Ignore users with these IDs
+ignoreduserIDs = [773986530695839764, 349942347905236992] #Ignore users with these IDs
+ignoredserverIDs = [495402640461660170]
 
 ser = serial.Serial('COM4', 115200) 
 print(ser.name)
@@ -18,7 +19,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.author.id in ignoredIDs:
+    if message.guild.id in ignoredserverIDs:
+        return
+    if message.author.id in ignoreduserIDs:
         return
     payload = message.author.name+": "+message.content
     print(payload)
